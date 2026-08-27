@@ -4,21 +4,21 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800;900&family=Assistant:wght@300;400;500;600;700&family=Rubik:wght@400;500;600;700&family=Rubik+Mono+One&display=swap">
 <style>
   :root{
-    --ink:#f6efdf;
-    --ink-dim:#cdc4ab;
-    --ink-faint:#93876c;
-    --bg-0:#050a07;
-    --bg-1:#0c1f15;
-    --bg-2:#123522;
-    --gold:#d9b06a;
-    --gold-bright:#f4d38f;
+    --ink:#fbf6ea;
+    --ink-dim:#d9d0b8;
+    --ink-faint:#a89b7c;
+    --bg-0:#0a150f;
+    --bg-1:#153a27;
+    --bg-2:#1a4530;
+    --gold:#dfb872;
+    --gold-bright:#f6d999;
     --gold-ink:#241a08;
-    --red:#ab3a3a;
-    --glass:rgba(255,255,255,0.055);
-    --glass-strong:rgba(255,255,255,0.09);
+    --red:#b8454a;
+    --glass:rgba(255,255,255,0.08);
+    --glass-strong:rgba(255,255,255,0.13);
     --glass-border:rgba(255,255,255,0.20);
-    --shadow:rgba(0,0,0,0.5);
-    --felt-line:rgba(217,176,106,0.16);
+    --shadow:rgba(0,0,0,0.45);
+    --felt-line:rgba(217,176,106,0.2);
     --radius-lg:22px;
     --radius-md:16px;
     --font-display:'Heebo', 'Noto Sans Hebrew', 'Arial Hebrew', sans-serif;
@@ -33,10 +33,10 @@
     margin:0;
     direction:rtl;
     background:
-      radial-gradient(ellipse 900px 600px at 18% -8%, rgba(217,176,106,0.16), transparent 55%),
-      radial-gradient(ellipse 1100px 800px at 88% 6%, rgba(30,120,75,0.38), transparent 52%),
-      radial-gradient(ellipse 900px 700px at 50% 115%, rgba(171,58,58,0.10), transparent 55%),
-      linear-gradient(160deg, var(--bg-1) 0%, #081310 45%, var(--bg-0) 100%);
+      radial-gradient(ellipse 900px 600px at 18% -8%, rgba(217,176,106,0.24), transparent 55%),
+      radial-gradient(ellipse 1100px 800px at 88% 6%, rgba(40,150,95,0.5), transparent 52%),
+      radial-gradient(ellipse 900px 700px at 50% 115%, rgba(184,69,74,0.16), transparent 55%),
+      linear-gradient(160deg, var(--bg-1) 0%, #12301f 45%, var(--bg-0) 100%);
     color:var(--ink);
     font-family:var(--font-body);
     font-size:17px;
@@ -51,7 +51,7 @@
       linear-gradient(var(--felt-line) 1px, transparent 1px),
       linear-gradient(90deg, var(--felt-line) 1px, transparent 1px);
     background-size:64px 64px;
-    opacity:.05;
+    opacity:.07;
     pointer-events:none;
     z-index:0;
   }
@@ -138,8 +138,8 @@
   }
   .topbar-inner{ display:flex; align-items:center; justify-content:space-between; gap:16px; }
   .brand{ display:flex; align-items:center; gap:10px; }
-  .brand-logo{ height:34px; width:auto; display:block; }
-  .footer-logo{ height:56px; width:auto; display:block; margin:0 auto; }
+  .brand-logo{ height:52px; width:auto; display:block; }
+  .footer-logo{ height:96px; width:auto; display:block; margin:0 auto; }
   .btn{
     display:inline-flex; align-items:center; justify-content:center; gap:8px;
     font-family:var(--font-label); font-weight:600; font-size:.9rem;
