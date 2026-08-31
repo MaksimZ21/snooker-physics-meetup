@@ -378,24 +378,44 @@
   .a11y-panel .a11y-reset{ margin-top:4px; font-size:.8rem; color:var(--ink-faint); text-align:center; justify-content:center; }
   .a11y-panel .a11y-link{ font-size:.8rem; color:var(--gold-bright); text-align:center; justify-content:center; text-decoration:underline; }
 
-  /* Accessibility states, toggled on <body> */
-  body.a11y-large-text{ font-size:20px; }
-  body.a11y-underline-links a{ text-decoration:underline !important; text-underline-offset:3px; }
-  body.a11y-stop-motion *, body.a11y-stop-motion *::before, body.a11y-stop-motion *::after{
+  /* Accessibility states — all toggled on <html> (rem/em are rooted there;
+     toggling <body> alone left every rem-sized element unchanged — the bug
+     behind "barely see a difference"). */
+  html.a11y-large-text{ font-size:23px !important; }
+  html.a11y-large-text body{ line-height:1.85; }
+  html.a11y-large-text .btn{ padding:14px 26px; font-size:1.05rem; }
+  html.a11y-large-text .field input, html.a11y-large-text .field select{ font-size:1.15rem; padding:15px 16px; }
+
+  html.a11y-underline-links a{ text-decoration:underline !important; text-underline-offset:4px; text-decoration-thickness:2px; }
+
+  html.a11y-stop-motion *, html.a11y-stop-motion *::before, html.a11y-stop-motion *::after{
     animation:none !important; transition:none !important; scroll-behavior:auto !important;
   }
-  body.a11y-high-contrast{ background:#000 !important; }
-  body.a11y-high-contrast .bg-fx, body.a11y-high-contrast .phy-label{ display:none !important; }
-  body.a11y-high-contrast, body.a11y-high-contrast *{
+
+  /* High contrast: flat black/white/yellow, no blur, no gradients, thick borders */
+  html.a11y-high-contrast, html.a11y-high-contrast body{ background:#000 !important; }
+  html.a11y-high-contrast body::before{ display:none !important; }
+  html.a11y-high-contrast .bg-fx, html.a11y-high-contrast .phy-label{ display:none !important; }
+  html.a11y-high-contrast, html.a11y-high-contrast *{
     color:#fff !important; border-color:#fff !important;
+    text-shadow:none !important; box-shadow:none !important;
   }
-  body.a11y-high-contrast a, body.a11y-high-contrast .gold-bright, body.a11y-high-contrast .eyebrow{ color:#ffe066 !important; }
-  body.a11y-high-contrast .glass, body.a11y-high-contrast .benefit-card, body.a11y-high-contrast .a11y-panel{
-    background:#000 !important; backdrop-filter:none !important;
+  html.a11y-high-contrast a{ color:#ffe066 !important; text-decoration:underline !important; }
+  html.a11y-high-contrast .gold-bright, html.a11y-high-contrast .eyebrow,
+  html.a11y-high-contrast .tagline, html.a11y-high-contrast h1 em, html.a11y-high-contrast h1 span em{ color:#ffe066 !important; }
+  html.a11y-high-contrast .glass, html.a11y-high-contrast .benefit-card, html.a11y-high-contrast .a11y-panel,
+  html.a11y-high-contrast .date-card, html.a11y-high-contrast .info-item, html.a11y-high-contrast .duo .card,
+  html.a11y-high-contrast .timeline, html.a11y-high-contrast .host, html.a11y-high-contrast .form-card,
+  html.a11y-high-contrast .schools-strip, html.a11y-high-contrast .policies details{
+    background:#000 !important; backdrop-filter:none !important; border:2px solid #fff !important;
   }
-  body.a11y-high-contrast .btn-primary{ background:#ffe066 !important; color:#000 !important; }
-  body.a11y-high-contrast .hero-media, body.a11y-high-contrast .g-item, body.a11y-high-contrast .ph,
-  body.a11y-high-contrast .wa-photo-single, body.a11y-high-contrast .schools-photo{ opacity:.35; }
+  html.a11y-high-contrast .btn-primary{ background:#ffe066 !important; color:#000 !important; border:2px solid #ffe066 !important; }
+  html.a11y-high-contrast .btn-ghost{ background:#000 !important; border:2px solid #fff !important; }
+  html.a11y-high-contrast .field input, html.a11y-high-contrast .field select,
+  html.a11y-high-contrast .date-choice label{ background:#000 !important; border:2px solid #fff !important; }
+  html.a11y-high-contrast .hero-media, html.a11y-high-contrast .g-item, html.a11y-high-contrast .ph,
+  html.a11y-high-contrast .wa-photo-single, html.a11y-high-contrast .schools-photo{ filter:grayscale(1) contrast(1.3); border:2px solid #fff !important; }
+  html.a11y-high-contrast .g-item span, html.a11y-high-contrast .hero-banner span{ background:#000 !important; }
 
   /* Consent checkbox */
   .consent-row{ display:flex; align-items:flex-start; gap:10px; margin-top:18px; }
@@ -1095,7 +1115,7 @@
       function applyPrefs(prefs){
         toggles.forEach(function(t){
           var on = !!prefs[t.cls];
-          document.body.classList.toggle(t.cls, on);
+          document.documentElement.classList.toggle(t.cls, on);
           var el = document.getElementById(t.id);
           if (el){
             el.classList.toggle('active', on);
