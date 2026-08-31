@@ -902,7 +902,7 @@
 
         <div class="consent-row">
           <input type="checkbox" id="f-consent" name="consent" required>
-          <label for="f-consent">קראתי ואני מסכים/ה ל<a href="#privacy-policy">מדיניות הפרטיות</a> <span class="req">*</span></label>
+          <label for="f-consent">קראתי ואני מסכים/ה ל<a href="#terms-of-use">תקנון האתר</a> ול<a href="#privacy-policy">מדיניות הפרטיות</a> <span class="req">*</span></label>
         </div>
 
         <div class="form-foot">
@@ -941,6 +941,18 @@
           <p>נתקלתם בבעיית נגישות בעמוד? נשמח שתפנו אלינו לכתובת <a href="mailto:service@sr-snookeracademy.com">service@sr-snookeracademy.com</a> ונטפל בפנייה בהקדם.</p>
         </div>
       </details>
+      <details id="terms-of-use">
+        <summary>תקנון האתר</summary>
+        <div class="policy-body">
+          <p><b>1. כללי</b> — אתר זה מופעל על ידי אקדמיית הסנוקר של שחר רוברג ("האקדמיה") ומיועד להצגת מידע על מפגש ההיכרות למורי פיזיקה ולאפשר הרשמה אליו. הגלישה והשימוש באתר כפופים לתנאים המפורטים כאן.</p>
+          <p><b>2. קניין רוחני</b> — כל הזכויות בתכני האתר, לרבות טקסטים, עיצוב, לוגו ותמונות שצולמו על ידי האקדמיה, שייכות לאקדמיה בלבד. אין להעתיק, לשכפל או להשתמש בתכנים ללא אישור מראש ובכתב.</p>
+          <p><b>3. דיוק המידע</b> — האקדמיה עושה מאמץ לשמור על עדכניות הפרטים באתר (מועדים, שעות ומיקום), אך אלה עשויים להשתנות. תאריכי המפגשים המדויקים יימסרו לנרשמים בנפרד. האקדמיה שומרת לעצמה את הזכות לעדכן, לדחות או לבטל מפגש מכל סיבה, לרבות מספר נרשמים בלתי מספיק.</p>
+          <p><b>4. הרשמה למפגש</b> — ההרשמה למפגש כפופה לאישור האקדמיה ולמספר המקומות הפנויים. השתתפות במפגש היא ללא עלות, כמפורט באתר.</p>
+          <p><b>5. הגבלת אחריות</b> — השימוש באתר הוא באחריות המשתמש בלבד. האקדמיה לא תישא באחריות לכל נזק ישיר או עקיף שייגרם כתוצאה משימוש באתר או הסתמכות על המידע בו.</p>
+          <p><b>6. דין וסמכות שיפוט</b> — על תקנון זה יחולו דיני מדינת ישראל, וסמכות השיפוט הבלעדית נתונה לבתי המשפט המוסמכים במחוז תל אביב.</p>
+          <p><b>7. יצירת קשר</b> — לשאלות בנוגע לתקנון ניתן לפנות אלינו בכתובת <a href="mailto:service@sr-snookeracademy.com">service@sr-snookeracademy.com</a>.</p>
+        </div>
+      </details>
     </div>
   </div>
 </footer>
@@ -966,10 +978,10 @@
       });
     }
 
-    var privacyLinks = document.querySelectorAll('a[href="#privacy-policy"]');
-    for (var j=0;j<privacyLinks.length;j++){
-      privacyLinks[j].addEventListener('click', function(e){
-        var det = document.getElementById('privacy-policy');
+    var policyLinks = document.querySelectorAll('a[href="#privacy-policy"], a[href="#terms-of-use"]');
+    for (var j=0;j<policyLinks.length;j++){
+      policyLinks[j].addEventListener('click', function(e){
+        var det = document.getElementById(this.getAttribute('href').slice(1));
         if (det){
           e.preventDefault();
           det.open = true;
