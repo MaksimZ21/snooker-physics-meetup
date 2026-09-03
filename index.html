@@ -1412,8 +1412,8 @@
 
     var form = document.getElementById('reg-form');
     var msg = document.getElementById('form-msg');
-    // Google Apps Script Web App URL — replace PENDING_SHEET_URL once deployed.
-    var SHEET_ENDPOINT = 'PENDING_SHEET_URL';
+    // Google Apps Script Web App URL, appends each registration to the leads sheet.
+    var SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwDR8-zUwbNDcf1eyOsr_o3CusCobBldIdKaZaB-NNxcI_LBjOMtjpu6uW4NeZWBKYPyA/exec';
 
     form.addEventListener('submit', function(e){
       e.preventDefault();
