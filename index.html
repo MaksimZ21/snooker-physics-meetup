@@ -1113,7 +1113,7 @@
         </div>
 
         <div class="form-foot">
-          <p class="privacy-note">הפרטים ייפתחו כטיוטת מייל בתוכנת הדואר שלכם, מיועדים לאקדמיה בלבד ולא מוצגים לגולשים אחרים באתר.</p>
+          <p class="privacy-note">הפרטים נשלחים ישירות לאקדמיה לצורך תיאום המפגש, ואינם מוצגים לגולשים אחרים באתר.</p>
           <button type="submit" class="btn btn-primary">שליחת הרשמה</button>
         </div>
         <div class="form-msg" id="form-msg" role="status"></div>
@@ -1136,7 +1136,7 @@
       <details id="privacy-policy">
         <summary>מדיניות פרטיות</summary>
         <div class="policy-body">
-          <p><b>ספציפית לטופס בעמוד זה:</b> לחיצה על "שליחת הרשמה" רק פותחת טיוטת מייל בתוכנת הדואר שלכם, ישירות לחברה — הפרטים אינם נשמרים בשרת, אינם עוברים דרך מערכת CRM, ואינם מוצגים לגולשים אחרים. המייל נשלח רק אם אתם עצמכם לוחצים "שלח".</p>
+          <p><b>ספציפית לטופס בעמוד זה:</b> לחיצה על "שליחת הרשמה" שולחת את הפרטים (שם, טלפון, אימייל, תפקיד, מועד נבחר) ישירות לגיליון הרשמות פנימי של החברה בשירות Google Sheets, לצורך תיאום המפגש בלבד. הפרטים אינם מוצגים לגולשים אחרים באתר ואינם מועברים לספק שיווק, פרסום או צד שלישי כלשהו מלבד שירות האחסון של Google עצמו.</p>
           <p>מדיניות הפרטיות המלאה של אקדמיית הסנוקר של שחר רוברג, המופעלת על ידי י. קרני חברה לאחזקות ולרישומים בע"מ (החלה על שאר האתר, כולל תהליכי רכישה והרשמה נוספים), מפורטת כאן:</p>
           <p><a href="https://sr-snookeracademy.com/privacy-policy/" target="_blank" rel="noopener">sr-snookeracademy.com/privacy-policy</a></p>
           <p>לשאלות או לבקשת עיון/מחיקת מידע ניתן לפנות אלינו בכתובת <a href="mailto:service@sr-snookeracademy.com">service@sr-snookeracademy.com</a>.</p>
@@ -1412,6 +1412,9 @@
 
     var form = document.getElementById('reg-form');
     var msg = document.getElementById('form-msg');
+    // Google Apps Script Web App URL — replace PENDING_SHEET_URL once deployed.
+    var SHEET_ENDPOINT = 'PENDING_SHEET_URL';
+
     form.addEventListener('submit', function(e){
       e.preventDefault();
       var data = new FormData(form);
@@ -1433,25 +1436,35 @@
 
       var email = (data.get('email') || '').trim();
       var role = data.get('role') || 'לא צוין';
+      var submitBtn = form.querySelector('button[type="submit"]');
 
-      var bodyLines = [
-        'הרשמה חדשה למפגש פיזיקה וסנוקר',
-        '',
-        'שם: ' + name,
-        'טלפון: ' + phone,
-        'אימייל: ' + (email || 'לא צוין'),
-        'תפקיד: ' + role,
-        'מועד נבחר: ' + dateChoice
-      ];
-      var subject = 'הרשמה למפגש פיזיקה וסנוקר – ' + name;
-      var mailto = 'mailto:maksim110044@gmail.com'
-        + '?subject=' + encodeURIComponent(subject)
-        + '&body=' + encodeURIComponent(bodyLines.join('\n'));
+      if (SHEET_ENDPOINT.indexOf('http') !== 0){
+        msg.className = 'form-msg err show';
+        msg.textContent = 'ההרשמה עדיין לא מחוברת — נא לפנות אלינו ישירות בינתיים.';
+        return;
+      }
 
-      window.location.href = mailto;
+      if (submitBtn) submitBtn.disabled = true;
+      msg.className = 'form-msg show';
+      msg.textContent = 'שולח...';
 
-      msg.className = 'form-msg ok show';
-      msg.textContent = 'נפתחה טיוטת מייל עם הפרטים שלכם — פשוט לוחצים "שלח" בתוכנת הדואר כדי לסיים את ההרשמה.';
+      fetch(SHEET_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ name: name, phone: phone, email: email, role: role, date: dateChoice })
+      })
+        .then(function(){
+          msg.className = 'form-msg ok show';
+          msg.textContent = 'ההרשמה נקלטה בהצלחה! ניצור איתכם קשר לקראת המפגש.';
+          form.reset();
+        })
+        .catch(function(){
+          msg.className = 'form-msg err show';
+          msg.textContent = 'משהו השתבש בשליחה — נסו שוב, או פנו אלינו ישירות ב-service@sr-snookeracademy.com.';
+        })
+        .finally(function(){
+          if (submitBtn) submitBtn.disabled = false;
+        });
     });
   })();
 </script>
